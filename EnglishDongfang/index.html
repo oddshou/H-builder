@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="css/mui.css" rel="stylesheet"/>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<h1 id="title" class="mui-title">自学英语</h1>
+	</header>
+	<div class="mui-content"></div>
+	
+	<script src="js/mui.js"></script>
+	<script type="text/javascript" charset="UTF-8">
+		mui.init({
+			subpages:[{
+				url:'pullrefresh_sub.html',
+				id:'pullrefresh_sub.html',
+				styles:{
+					top: '45px',
+					bottom: '0px',
+				}
+			}],
+			statusBarBackground: '#f7f7f7',
+			gestureConfig:{
+				doubletap:true
+			}
+		});
+		
+		var contentWebview = null;
+		document.querySelector('header').addEventListener('doubletap',function () {
+			if(contentWebview==null){
+				contentWebview = plus.webview.currentWebview().children()[0];
+			}
+			contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
+		});		
+		
+		var aniShow = 'pop-in';
+		var menu = null,
+			showMenu = false;
+		var isInTransition = false;
+		var _self;
+		
+		if (mui.os.android) {
+			var list = document.querySelectorAll('.ios-only');
+			if (list) {
+				for(var i=0; i < list.length; i++){
+					list[i].style.display = 'none';
+				}
+			}
+			
+			//
+			if (parseFloat(mui.os.version) < 4.4) {
+				aniShow = 'slide-in-right'
+				
+			}
+		}
+		
+		mui.plusReady(function(){
+			//读取本地存储，检查是否为首次启动
+			var showGuide = plus.storage.getItem("lauchFlag");
+
+			plus.screen.lockOrientation("portrait-primary");
+			if (showGuide) {
+				plus.navigator.closeSplashscreen();
+				plus.navigator.setFullscreen(false);
+				
+			}else{
+				mui.openWindow({
+					id: 'guide',
+					url: 'guide.html',
+					styles: {
+						popGesture: 'none'
+					},
+					show: {
+						aniShow: 'none'
+					},
+					waiting:{
+						autoShow: false
+					}
+				});				
+			}
+//			_self = plus.webview.currentWebview();
+//			var titleView = _self.getNavigationbar();
+//			
+//			if (!titleView) {
+//				titleView = plus.webview.getLaunchWebview().getNavigationbar();
+//			}
+//			titleView.drawRect("#cccccc", {
+//				top: "43px",
+//				height: "1px",
+//				left: "0px"
+//			});
+			
+//			_self.setStyle({
+//				bounce: 'vertical',
+//				bounceBackground: '#efeff4'
+//			});
+			
+		});
+		
+	</script>
+	
+</body>
+</html>

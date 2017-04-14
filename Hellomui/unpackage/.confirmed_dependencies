@@ -1,0 +1,181 @@
+{
+	"index.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/update.js",
+			"js/mui.js",
+			"css/mui.css"
+		],
+		"refer": [
+			"index-menu.html",
+			"examples/guide.html",
+			"examples/accordion.html",
+			"examples/badges.html",
+			"examples/buttons.html",
+			"examples/checkbox.html",
+			"examples/dialog.html",
+			"examples/clouddb_wilddog.html",
+			"examples/ajax.html",
+			"examples/grid-default.html",
+			"examples/tableviews-with-collapses.html",
+			"examples/media-list.html",
+			"examples/popovers.html",
+			"examples/im-chat.html",
+			"examples/beecloud.html",
+			"examples/imageviewer.html",
+			"examples/pullrefresh_main.html",
+			"examples/pullrefresh.html"
+		]
+	},
+	"index-menu.html": {
+		"resources": [
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"examples/accordion.html": {
+		"resources": [
+			"images/cbd.jpg",
+			"images/muwu.jpg",
+			"images/yuantiao.jpg",
+			"css/mui.min.css",
+			"images/shuijiao.jpg"
+		],
+		"refer": []
+	},
+	"examples/badges.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"examples/buttons.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"examples/checkbox.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"examples/dialog.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"examples/clouddb_wilddog.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf"
+		]
+	},
+	"examples/ajax.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"examples/guide.html": {
+		"resources": [
+			"js/mui.js",
+			"css/mui.css"
+		]
+	},
+	"examples/grid-default.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"examples/tableviews-with-collapses.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"examples/media-list.html": {
+		"resources": [
+			"images/cbd.jpg",
+			"images/yuantiao.jpg",
+			"images/muwu.jpg",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"images/shuijiao.jpg"
+		]
+	},
+	"examples/popovers.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"examples/im-chat.html": {
+		"resources": [
+			"js/mui.imageViewer.js",
+			"images/logo.png",
+			"js/mui.min.js",
+			"css/app.css",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/mui.imageviewer.css",
+			"js/arttmpl.js"
+		]
+	},
+	"examples/beecloud.html": {
+		"resources": [
+			"js/beecloud.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"examples/imageviewer.html": {
+		"resources": [
+			"js/mui.zoom.js",
+			"images/muwu.jpg",
+			"images/yuantiao.jpg",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/mui.previewimage.js",
+			"images/shuijiao.jpg"
+		]
+	},
+	"examples/pullrefresh_main.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"examples/pullrefresh_sub.html",
+			"fonts/mui.ttf"
+		],
+		"refer": [
+			"examples/pullrefresh_sub.html"
+		]
+	},
+	"examples/pullrefresh.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	}
+}

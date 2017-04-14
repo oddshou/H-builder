@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/odds.css"/>
+	</head>
+
+	<body>
+		<!--下拉刷新容器-->
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		  <div class="mui-scroll">
+		    <!--数据列表-->
+		    <ul class="mui-table-view mui-table-view-chevron">
+		      <li class="O_loading">正在加载...</li>
+		    </ul>
+		  </div>
+		</div>
+		<script src="js/mui.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init({
+				pullRefresh: {
+					container: "#pullrefresh",
+					down:{
+						height:50,
+						auto:true,
+						contentdown:"下拉可以刷新",
+						contentover:"释放立即刷新",
+						contentrefresh: "正在刷新...",
+						callback:pulldownRefresh
+					}
+				}
+			});
+			
+			function pulldownRefresh(){
+				console.log('pull down')
+			};
+		</script>
+	</body>
+
+</html>
