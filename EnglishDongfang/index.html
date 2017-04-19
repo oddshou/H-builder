@@ -11,24 +11,23 @@
 <body>
 	<header class="mui-bar mui-bar-nav">
 		<h1 id="title" class="mui-title">自学英语</h1>
-	</header>
-	<div class="mui-content"></div>
-	
+	</header>	
 	<script src="js/mui.js"></script>
 	<script type="text/javascript" charset="UTF-8">
 		mui.init({
 			subpages:[{
-				url:'pullrefresh_sub.html',
-				id:'pullrefresh_sub.html',
+				url:'pullrefresh_group.html',
+				id:'pullrefresh_group.html',
 				styles:{
 					top: '45px',
 					bottom: '0px',
 				}
 			}],
-			statusBarBackground: '#f7f7f7',
-			gestureConfig:{
-				doubletap:true
-			}
+			preloadPages:[{
+				url:'pullrefresh_group_element.html',
+				id:'pullrefresh_group_element.html'	
+			}],
+			statusBarBackground: '#f7f7f7'
 		});
 		
 		var contentWebview = null;
@@ -60,6 +59,19 @@
 			}
 		}
 		
+		function preload(){
+//			//预加载 group_element
+//			gourpElement = mui.openWindow({
+//				id:'pullrefresh_group_element',
+//				url:'pullrefresh_group_element.html',
+//				createNew:false,
+//				waiting:{
+//					autoShow:true,
+//					title:'正在加载...'
+//				}
+//			})
+		}
+		
 		mui.plusReady(function(){
 			//读取本地存储，检查是否为首次启动
 			var showGuide = plus.storage.getItem("lauchFlag");
@@ -68,7 +80,7 @@
 			if (showGuide) {
 				plus.navigator.closeSplashscreen();
 				plus.navigator.setFullscreen(false);
-				
+				preload();
 			}else{
 				mui.openWindow({
 					id: 'guide',
@@ -83,6 +95,9 @@
 						autoShow: false
 					}
 				});				
+				setTimeout(function(){
+					preload();
+				}, 200);
 			}
 //			_self = plus.webview.currentWebview();
 //			var titleView = _self.getNavigationbar();

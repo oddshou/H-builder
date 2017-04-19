@@ -1,60 +1,67 @@
 {
-  "detail_main.html": {
-    "resources": [
-      "detail.html",
-      "css/app.css"
-    ],
-    "refer": []
-  },
-  "index.html": {
-    "resources": [
-      "js/app.js",
-      "css/app.css",
-      "js/mui.min.js",
-      "fonts/mui.ttf",
-      "css/mui.min.css",
-      "list.html",
-      "img/36kr_2x.png",
-      "js/index.js"
-    ],
-    "refer": [
-      "browser.html",
-      "detail.html",
-      "detail_main.html",
-      "about.html",
-      "setting.html",
-      "list.html"
-    ]
-  },
-  "about.html": {
-    "resources": [
-      "js/share.js",
-      "img/qrcode.png",
-      "css/about.css"
-    ],
-    "refer": []
-  },
-  "list.html": {
-    "resources": [
-      "img/blank.jpg",
-      "js/news.js",
-      "tmpl/news_item.js",
-      "js/html5sql.js",
-      "img/bg.png",
-      "js/feed.js"
-    ],
-    "refer": []
-  },
-  "detail.html": {
-    "resources": [
-      "img/blank_big.jpg"
-    ],
-    "refer": []
-  },
-  "setting.html": {
-    "resources": [
-      "css/mui.min.css"
-    ],
-    "refer": []
-  }
+	"detail_main.html": {
+		"resources": [
+			"detail.html",
+			"css/app.css"
+		],
+		"refer": [
+			"detail.html"
+		]
+	},
+	"index.html": {
+		"resources": [
+			"js/app.js",
+			"css/app.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"list.html",
+			"img/36kr_2x.png",
+			"js/index.js",
+			"js/mui.js",
+			"css/mui.css"
+		],
+		"refer": [
+			"browser.html",
+			"detail.html",
+			"detail_main.html",
+			"about.html",
+			"setting.html",
+			"list.html"
+		]
+	},
+	"about.html": {
+		"resources": [
+			"js/share.js",
+			"img/qrcode.png",
+			"css/about.css"
+		],
+		"refer": []
+	},
+	"list.html": {
+		"resources": [
+			"img/blank.jpg",
+			"js/news.js",
+			"tmpl/news_item.js",
+			"js/html5sql.js",
+			"img/bg.png",
+			"js/feed.js",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"detail.html": {
+		"resources": [
+			"img/blank_big.jpg"
+		],
+		"refer": []
+	},
+	"setting.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/mui.css"
+		],
+		"refer": []
+	}
 }
