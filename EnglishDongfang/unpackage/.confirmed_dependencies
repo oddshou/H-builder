@@ -1,74 +1,74 @@
 {
-	"index.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/mui.js",
-			"css/mui.css",
-			"list.html",
-			"pullrefresh_sub.html",
-			"pullrefresh_group.html"
-		],
-		"refer": [
-			"list.html",
-			"guide.html",
-			"pullrefresh_group.html",
-			"pullrefresh_group_element.html"
-		]
-	},
-	"list.html": {
-		"resources": [
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/odds.css"
-		],
-		"refer": []
-	},
-	"guide.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"css/mui.css"
-		],
-		"refer": []
-	},
-	"pullrefresh_sub.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"fonts/mui.ttf"
-		],
-		"refer": []
-	},
-	"pullrefresh_group.html": {
-		"resources": [
-			"js/common_request.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css"
-		],
-		"refer": [
-			"pullrefresh_group_element.html"
-		]
-	},
-	"pullrefresh_group_element.html": {
-		"resources": [
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/common_request.js",
-			"js/mui.min.js"
-		],
-		"refer": [
-			"content_page.html"
-		]
-	},
-	"content_page.html": {
-		"resources": [
-			"css/mui.min.css",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"js/comment_util.js"
-		]
-	}
+  "index.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/mui.js",
+      "css/mui.css",
+      "list.html",
+      "pullrefresh_sub.html",
+      "pullrefresh_group.html"
+    ],
+    "refer": [
+      "list.html",
+      "guide.html",
+      "pullrefresh_group.html",
+      "pullrefresh_group_element.html"
+    ]
+  },
+  "list.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/odds.css"
+    ],
+    "refer": []
+  },
+  "guide.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/mui.css"
+    ],
+    "refer": []
+  },
+  "pullrefresh_sub.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": []
+  },
+  "pullrefresh_group.html": {
+    "resources": [
+      "js/common_request.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "pullrefresh_group_element.html"
+    ]
+  },
+  "pullrefresh_group_element.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/common_request.js",
+      "js/mui.min.js"
+    ],
+    "refer": [
+      "content_page.html"
+    ]
+  },
+  "content_page.html": {
+    "resources": [
+      "css/mui.min.css",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "js/comment_util.js"
+    ]
+  }
 }

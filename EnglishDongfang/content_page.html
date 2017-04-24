@@ -73,7 +73,8 @@
 		<script type="text/javascript">
 			mui.init();
 			oid = 0;
-			URL = 'http://120.77.9.71:8092/jsonapi';
+			URL = 'http://192.168.1.149:8092/jsonapi';
+//			URL = 'http://120.77.9.71:8092/jsonapi';			
 			function getrequest_data(){
 				return JSON.stringify({
 				"header":{
@@ -140,7 +141,7 @@
 					mui.toast('当前网络不给力，请稍后再试');
 				}				
 			}	
-			dopost();
+//			dopost();
 			
 			document.addEventListener('newId', function(event){
 				console.log('参数 ' + event.detail.idd);

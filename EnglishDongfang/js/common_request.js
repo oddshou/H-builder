@@ -3,10 +3,13 @@
 //请求成功回调
 var success = function(response){
 //	mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
-	console.log(JSON.stringify(response));
-	if (response.data == undefined) {
+
+	if (response.data.length == undefined) {
+		console.log('response == undefined');
+		mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
 		return
 	}
+	console.log(JSON.stringify(response));	
 	if (response.data.length >= 0) {
 		createList(response.data);
 	}
