@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			.s_w_c{
+			    font-size: 14px;
+			    line-height: 25px;
+			    padding: 10px 0px 10px 0px;
+			    margin-top: 45px;
+			    margin-bottom: 45px;
+			    background: white;
+			    color: black;
+			    padding-left: 5px;
+			    padding-right: 5px;
+			}
+			.content_p{
+				color: black;
+				-webkit-touch-callout:inherit;
+				-webkit-user-select:text;
+				-khtml-user-select:none;
+				-moz-user-select:none;
+				-ms-user-select:none;
+				user-select:text;
+				font-size: 16px;
+			}
+			.parent{
+				position: fixed;
+				bottom: 0;
+				height: 45px;
+				width: 100%;
+
+			}
+			.left{
+				float: left;
+				width: 20%;
+				height: 100%;
+			}
+			.right{
+				width: 80%;
+				float: left;
+				height: 100%;
+				background-color: white;
+				line-height: 2.0;
+			}
+			.trans{
+				color: black;
+			}
+		</style>
+	</head>
+
+	<body>
+		
+		<header class="mui-bar mui-bar-nav">
+			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title">自学英语</h1>
+		</header>		
+		<div class="s_w_c">
+		</div>
+		<div id="popover" class="mui-popover" style="padding: 5px;">
+			<p id="translate"></p>
+		</div>
+		<div class="parent">
+			<button type="button" class="mui-btn mui-btn-primary left" onclick="">翻译</button>
+			<a href="#popover" id="openPopover" class="mui-btn  right">长按原文->拷贝->点击翻译</a>	
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/comment_util.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.init();
+			oid = 0;
+			URL = 'http://192.168.1.149:8092/jsonapi';
+			function getrequest_data(){
+				return JSON.stringify({
+				"header":{
+					"key": "27a5ddfd5c81a95502fcbaab47379277"
+				},
+				"api" : "ReqContent",
+				"params" : {
+					"oid":oid
+				}
+			});
+			}
+			
+			function createContent(data){
+				var content_div = document.body.querySelector('.s_w_c');
+				var title_h = document.getElementById("title");
+				title_h.innerHTML = data.title;
+				var plist_ = data.plist;
+				var p_list = plist_.split("<p>");
+				for (var i = 0; i < p_list.length; i++) {
+					var p = document.createElement('p');
+					p.className = 'content_p';
+//					li.className = 'mui-table-view-cell';
+					p.innerHTML = p_list[i];
+					content_div.appendChild(p);
+				}
+			}		
+			
+			//执行ajax请求
+			var network = true;
+			if(mui.os.plus){
+				mui.plusReady(function(){
+					if (plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+						network = false;
+					}
+			//					dopost()
+				});
+			}
+			//请求成功回调
+			var success = function(response){
+				console.log(JSON.stringify(response));
+				if (response.data == undefined) {
+					return
+				}
+				createContent(response.data);
+			
+			};
+			//获取内容
+			function dopost(){
+				if (network) {
+					mui.ajax(URL,{
+						data:getrequest_data(),
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						timeout:10000,//超时时间设置为10秒；
+						headers:{'Content-Type':'application/json'},	              
+						success:success,
+						error:function(xhr,type,errorThrown){
+							//异常处理；
+							console.log(type);
+							mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
+						}
+					});
+				}else{
+					mui.toast('当前网络不给力，请稍后再试');
+				}				
+			}	
+			dopost();
+			
+			document.addEventListener('newId', function(event){
+				console.log('参数 ' + event.detail.idd);
+				console.log("参数 " + event.detail.titles )
+				oid = event.detail.idd;
+				document.getElementById('title').innerHTML= event.detail.titles;
+				//清空内容
+				var content_div = document.body.querySelector('.s_w_c');
+				content_div.innerHTML = "";
+				dopost();
+			})
+			mui(document.body).on('tap', '.left', function(event){
+				console.log(getClip());
+				var trans = getClip();
+				var url = "http://fanyi.youdao.com/openapi.do?keyfrom=learnenglishsf&key=1146860801&type=data&doctype=json&version=1.1&q=" + trans;
+				var right_btn = document.body.querySelector(".right");
+				if (trans == right_btn.innerHTML) {
+					mui('.mui-popover').popover('show', document.getElementById('openPopover'));
+					return;
+				}
+				right_btn.innerHTML = trans;
+				mui.getJSON(url,{},getTransSuccess);
+			});
+			function getTransSuccess(data){
+					console.log(JSON.stringify(data));
+					var pop = document.body.querySelector('.mui-popover');
+					pop.innerHTML='';
+					//首行构建单词和音标
+					var p_query = document.createElement('p');
+					p_query.innerHTML = "<strong>" + data.query + "</strong>  ";
+					p_query.className = 'trans';
+					pop.appendChild(p_query);
+					if (data.basic != undefined) {
+						if (data.basic.phonetic != undefined) {
+							p_query.innerHTML += "["+ data.basic.phonetic + "]";
+						}
+						for (var i = 0; i< data.basic.explains.length; i++) {
+							var p = document.createElement('p');
+							p.innerHTML = data.basic.explains[i];
+							p.className = 'trans'
+							pop.appendChild(p);
+						}
+					}else if (data.translation != undefined) {
+						var p = document.createElement('p');
+						p.innerHTML = data.translation;
+						pop.appendChild(p);
+						pop.className = 'trans';
+					}
+					if (data.web != undefined) {
+						var web_trans = document.createElement('p');
+						web_trans.innerHTML = '网络释义-----------------';
+						pop.appendChild(web_trans)
+						var web_p = document.createElement('p');
+						for (var i = 0; i< data.web[0].value.length; i++) {
+							web_p.innerHTML += data.web[0].value[i] + " | ";
+							web_p.className = 'trans'
+							
+						}
+						pop.appendChild(web_p);
+					}
+					mui('.mui-popover').popover('show', document.getElementById('openPopover'));				
+			}
+//			mui.plusReady(function(){
+//				if (mui.os.android) {
+//					function copy
+//				}
+//			})
+			
+		</script>
+		
+		<!--<div id="YOUDAO_SELECTOR_WRAPPER" style="display:none; margin:0; border:0; padding:0; width:320px; height:240px;"></div>
+		<script type="text/javascript" src="http://fanyi.youdao.com/openapi.do?keyfrom=learnenglishsf&key=1146860801&type=selector&version=1.2&translate=on" charset="utf-8"></script>-->
+	</body>
+
+</html>

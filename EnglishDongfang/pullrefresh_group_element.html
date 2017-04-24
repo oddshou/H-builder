@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title">自学英语</h1>
+		</header>		
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul class="mui-table-view mui-table-view-chevron">
+				</ul>
+			</div>
+		</div>
+		</body>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			
+			URL = 'http://192.168.1.149:8092/jsonapi';
+			var pageIndex = 0;
+			var PAGE_SIZE = 20;
+			var group_id = 1;
+			function getrequest_data(){
+				console.log('group_id ' + group_id);
+				return JSON.stringify({
+				"header":{
+					"key": "27a5ddfd5c81a95502fcbaab47379277"
+				},
+				"api" : "ReqGroupElementList",
+				"params" : {
+					"groupId":Number(group_id),
+					"pageSize":20,
+					"pageIndex":pageIndex,
+				}
+			});
+			}
+			
+			function createList(data){
+				pageIndex++;
+				mui('#pullrefresh').pullRefresh().endPullupToRefresh(data.length < PAGE_SIZE);
+//				if (data.length < PAGE_SIZE) {
+//					mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
+//				}
+
+				var table = document.body.querySelector('.mui-table-view');
+				var cells = document.body.querySelector('.mui-table-view-cell');
+				for (var i = 0; i < data.length; i++) {
+					var li = document.createElement('li');
+					li.className = 'mui-table-view-cell';
+					li.id = data[i].oid;
+					li.innerHTML = '<a class="mui-navigate-right">' + data[i].title +'</a>';
+					table.appendChild(li);
+				}
+			}			
+		</script>
+		<script src="js/common_request.js"></script>
+		<script >		
+			mui.init({
+				pullRefresh:{
+					container:'#pullrefresh',
+					up: {
+						auto:true,
+						height:50,
+						contentrefresh: '正在加载...',
+						contentnomore:'没有更多数据了',
+						callback: pullupRefresh
+					}
+				},
+				preloadPages:[{
+					url:'content_page.html',
+					id:'content_page.html'	
+				}],
+			});
+//			document.addEventListener("plusready", function(){
+//				group_id = plus.webview.currentWebview().id;
+//				dopost();
+//			}, false);
+			document.addEventListener('newId', function(event){
+				console.log('参数 ' + event.detail.idd);
+				console.log("参数 " + event.detail.titles )
+				group_id = event.detail.idd;
+				document.getElementById('title').innerHTML= event.detail.titles;
+				//清空内容
+				var table = document.body.querySelector('.mui-table-view');
+				mui("#pullrefresh").pullRefresh().refresh(true);
+				table.innerHTML = "";
+				pageIndex = 0;
+				dopost();
+			})
+			var page = null;
+			mui.plusReady(function() {
+  				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(){
+					var id = this.getAttribute('id');
+					var value = this.innerText;
+					if (page == null) {
+						page = plus.webview.getWebviewById("content_page.html");
+					}
+					mui.fire(page, "newId", {
+						idd:id,
+						titles:value
+					})
+					mui.openWindow({
+						url:'content_page.html',
+						id:'content_page.html'
+					});
+				})
+       	});
+			
+//			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(){
+//				var id = this.getAttribute('id');
+//				mui.fire()
+//				mui.openWindow({
+//					url:'content_page.html',
+//					id:'content_page.html'
+//				});
+//
+//			})
+		</script>
+
+
+
+</html>
