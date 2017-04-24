@@ -60,6 +60,7 @@
 					li.innerHTML = '<a class="mui-navigate-right">' + data[i].title +'</a>';
 					table.appendChild(li);
 				}
+
 			}			
 		</script>
 		<script src="js/common_request.js"></script>
@@ -91,9 +92,10 @@
 				document.getElementById('title').innerHTML= event.detail.titles;
 				//清空内容
 				var table = document.body.querySelector('.mui-table-view');
-				mui("#pullrefresh").pullRefresh().refresh(true);
+
 				table.innerHTML = "";
 				pageIndex = 0;
+				mui("#pullrefresh").pullRefresh().refresh(true);
 				dopost();
 			})
 			var page = null;
