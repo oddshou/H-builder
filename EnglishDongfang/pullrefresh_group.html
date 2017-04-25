@@ -34,20 +34,19 @@
 				"params" : {}
 			});
 			}
-			var data_list = new Array();
-			function createList(data){
+			function createList(response){
 				mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
 				mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
+
 				var table = document.body.querySelector('.mui-table-view');
 				var cells = document.body.querySelector('.mui-table-view-cell');
-				for (var i = 0; i < data.length; i++) {
+				for (var i = 0; i < response.data.length; i++) {
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell';
-					li.id = data[i].id;
-					li.innerHTML = '<a class="mui-navigate-right">' + data[i].title +'</a>';
+					li.id = response.data[i].id;
+					li.innerHTML = '<a class="mui-navigate-right">' + response.data[i].title +'</a>';
 					table.appendChild(li);
 				}
-				data_list.push(data);
 			}			
 		</script>
 		<script src="js/common_request.js"></script>

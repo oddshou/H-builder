@@ -6,6 +6,13 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			.title {
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+			}			
+		</style>
 	</head>
 
 	<body>
@@ -44,23 +51,31 @@
 			});
 			}
 			
-			function createList(data){
-				pageIndex++;
-				mui('#pullrefresh').pullRefresh().endPullupToRefresh(data.length < PAGE_SIZE);
+			function createList(response){
+
+
+				mui('#pullrefresh').pullRefresh().endPullupToRefresh(response.data.length < PAGE_SIZE);
 //				if (data.length < PAGE_SIZE) {
 //					mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
 //				}
 
 				var table = document.body.querySelector('.mui-table-view');
 				var cells = document.body.querySelector('.mui-table-view-cell');
-				for (var i = 0; i < data.length; i++) {
+				for (var i = 0; i < response.data.length; i++) {
 					var li = document.createElement('li');
 					li.className = 'mui-table-view-cell';
-					li.id = data[i].oid;
-					li.innerHTML = '<a class="mui-navigate-right">' + data[i].title +'</a>';
+					li.id = response.data[i].oid;
+					li.innerHTML = '<a class="mui-navigate-right">' + response.data[i].title +'</a>';
 					table.appendChild(li);
 				}
-
+				if(pageIndex == 0){
+					var scroll_view = document.body.querySelector('.mui-scroll');
+					var div_title = document.createElement('div');
+					div_title.innerHTML = "共"+ Math.ceil(response.dataLength/PAGE_SIZE) + "页-"+ response.dataLength + "条";
+					div_title.className= 'title';
+					scroll_view.insertBefore(div_title, table);
+				}
+				pageIndex++;
 			}			
 		</script>
 		<script src="js/common_request.js"></script>
@@ -92,11 +107,14 @@
 				document.getElementById('title').innerHTML= event.detail.titles;
 				//清空内容
 				var table = document.body.querySelector('.mui-table-view');
-
 				table.innerHTML = "";
 				pageIndex = 0;
 				mui("#pullrefresh").pullRefresh().refresh(true);
 				dopost();
+				
+				var title = document.body.querySelector('.title');
+				title.parentNode.removeChild(title);
+				
 			})
 			var page = null;
 			mui.plusReady(function() {

@@ -11,7 +11,7 @@ var success = function(response){
 	}
 	console.log(JSON.stringify(response));	
 	if (response.data.length >= 0) {
-		createList(response.data);
+		createList(response);
 	}
 
 };
