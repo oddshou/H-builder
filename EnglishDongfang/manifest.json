@@ -171,11 +171,13 @@
 					"css/mui.css",
 					"list.html",
 					"pullrefresh_sub.html",
-					"pullrefresh_group.html"
+					"pullrefresh_group.html",
+					"js/common_request.js"
 				],
 				"refer": [
 					"guide.html",
-					"pullrefresh_group_element.html"
+					"pullrefresh_group_element.html",
+					"offcanvas-drag-right-plus-menu.html"
 				],
 				"priority": 0
 			},
@@ -236,6 +238,13 @@
 					"js/mui.min.js",
 					"fonts/mui.ttf",
 					"js/comment_util.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"offcanvas-drag-right-plus-menu.html": {
+				"resources": [
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0

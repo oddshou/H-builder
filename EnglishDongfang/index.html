@@ -7,81 +7,217 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link href="css/mui.min.css" rel="stylesheet"/>
+	<style>
+		html,
+		body {
+			background-color: #efeff4;
+		}
+		p {
+			text-indent: 22px;
+		}
+		span.mui-icon {
+			font-size: 14px;
+			color: #007aff;
+			margin-left: -15px;
+			padding-right: 10px;
+		}
+	</style>
 </head>
 <body>
 	<header class="mui-bar mui-bar-nav">
-		<h1 id="title" class="mui-title">自学英语</h1>
-	</header>	
+		<a class="mui-action-menu mui-icon mui-icon-bars mui-pull-left"></a>
+		<a class="mui-action-back mui-btn mui-btn-link mui-pull-right">关闭</a>
+		<h1 class="mui-title">off canvas（侧滑导航）</h1>
+	</header>
+	<div class="mui-content">
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<ul id="data-table-view" class="mui-table-view mui-table-view-chevron">
+				</ul>
+			</div>
+		</div>
+	</div>
 	<script src="js/mui.min.js"></script>
-	<script type="text/javascript" charset="UTF-8">
+	<script type="text/javascript">
+//		URL = 'http://192.168.1.149:8092/jsonapi';
+				URL = 'http://120.77.9.71:8092/jsonapi';			
+		function getrequest_data(){
+			return JSON.stringify({
+				"header":{
+					"key": "27a5ddfd5c81a95502fcbaab47379277"
+				},
+				"api" : "ReqGroupList",
+				"params" : {}
+			});
+		}
+		function createList(response){
+			mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+			mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
+	
+			var table = document.body.querySelector('#data-table-view');
+	//				var cells = document.body.querySelector('.mui-table-view-cell');
+			for (var i = 0; i < response.data.length; i++) {
+				var li = document.createElement('li');
+				li.className = 'mui-table-view-cell';
+				li.id = response.data[i].id;
+				li.innerHTML = '<a class="mui-navigate-right">' + response.data[i].title +'</a>';
+				table.appendChild(li);
+			}
+		}
+
+	</script>
+	<script src="js/common_request.js"></script>
+	<script>
+		var showMenu = false;
+		var page = null;
+		var main, menu, mask = mui.createMask(_closeMenu);
 		mui.init({
-			subpages:[{
-				url:'pullrefresh_group.html',
-				id:'pullrefresh_group.html',
-				styles:{
-					top: '45px',
-					bottom: '0px',
-				}
-			}],
 			preloadPages:[{
 				url:'pullrefresh_group_element.html',
 				id:'pullrefresh_group_element.html'	
-			}],
-			statusBarBackground: '#f7f7f7'
+			}],				
+			pullRefresh: {
+				container: '#pullrefresh',
+				up: {
+					auto:true,
+					contentrefresh: '正在加载...',
+					callback: pullupRefresh
+				}
+			},
+			beforeback:back,
+			swipeBack:false
 		});
 		
-		var contentWebview = null;
-		document.querySelector('header').addEventListener('doubletap',function () {
-			if(contentWebview==null){
-				contentWebview = plus.webview.currentWebview().children()[0];
+		function back(){
+			if (showMenu) {
+				//菜单处于显示状态，返回键应该先关闭菜单,阻止主窗口执行mui.back逻辑；
+				closeMenu();
+				return false;
+			}else{
+				//菜单处于隐藏状态，执行返回时，要先close菜单页面，然后继续执行mui.back逻辑关闭主窗口；
+//				menu.close('none');
+				return true;
 			}
-			contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
-		});		
-		
-		var aniShow = 'pop-in';
-		var menu = null,
-			showMenu = false;
-		var isInTransition = false;
-		var _self;
-		
-		if (mui.os.android) {
-			var list = document.querySelectorAll('.ios-only');
-			if (list) {
-				for(var i=0; i < list.length; i++){
-					list[i].style.display = 'none';
-				}
+		}
+		/**
+		 * 显示菜单菜单
+		 */
+		function openMenu() {
+			if (!showMenu) {
+				//侧滑菜单处于隐藏状态，则立即显示出来；
+				//显示完毕后，根据不同动画效果移动窗体；
+				menu.show('none', 0, function() {
+					//主窗体开始侧滑；
+					main.setStyle({
+						left: '70%',
+						transition: {
+							duration: 150
+						}
+//						zindex:1
+					});
+				});
+				//显示遮罩
+				mask.show();
+				showMenu = true;
+			}
+		}		
+		function _closeMenu(){
+			if (showMenu) {
+				console.log("close menu");
+				main.setStyle({
+					left: '0',
+					transition: {
+						duration: 150
+					}
+				});
+				//等窗体动画结束后，隐藏菜单webview，节省资源；
+				setTimeout(function() {
+					menu.hide();
+				}, 200);
+				//改变标志位
+				showMenu = false;
 			}
 			
-			//
-			if (parseFloat(mui.os.version) < 4.4) {
-				aniShow = 'slide-in-right'
-				
+		}
+		/**
+		 * 关闭侧滑菜单
+		 */
+		function closeMenu () {
+			_closeMenu();
+			//关闭遮罩
+			mask.close();
+		}
+		//点击左上角图标，打开侧滑菜单；
+		document.querySelector('.mui-icon-bars').addEventListener('tap', openMenu);
+		window.addEventListener('dragright', function(e) {
+			e.detail.gesture.preventDefault();
+		});
+		window.addEventListener('dragleft', function(e) {
+			e.detail.gesture.preventDefault();
+		});
+		//主界面向右滑动，若菜单未显示，则显示菜单；否则不做任何操作；
+		window.addEventListener("swiperight", openMenu);
+		 //主界面向左滑动，若菜单已显示，则关闭菜单；否则，不做任何操作；
+		window.addEventListener("swipeleft", closeMenu);
+		 //menu页面向左滑动，关闭菜单；
+		window.addEventListener("menu:swipeleft", closeMenu);
+
+		//重写mui.menu方法，Android版本menu按键按下可自动打开、关闭侧滑菜单；
+		mui.menu = function() {
+			if (showMenu) {
+				closeMenu();
+			} else {
+				openMenu();
 			}
 		}
-		
-		function preload(){
-//			//预加载 group_element
-//			gourpElement = mui.openWindow({
-//				id:'pullrefresh_group_element',
-//				url:'pullrefresh_group_element.html',
-//				createNew:false,
-//				waiting:{
-//					autoShow:true,
-//					title:'正在加载...'
-//				}
-//			})
-		}
-		
-		mui.plusReady(function(){
+		mui.plusReady(function() {
+			main = plus.webview.currentWebview();
+			main.setStyle({
+				zindex:1
+			})
+			setTimeout(function(){
+				menu = mui.preload({
+					id: 'offcanvas-drag-right-plus-menu',
+					url: 'offcanvas-drag-right-plus-menu.html',
+					styles: {
+						left: 0,
+						width: '70%'
+//						zindex: 0
+					}
+				});
+			}, 300);
+			
+			mui('#data-table-view').on('tap', '.mui-table-view-cell', function(){
+				var id = this.getAttribute('id');
+				var value = this.innerText;
+				if (page == null) {
+					page = plus.webview.getWebviewById("pullrefresh_group_element.html");
+				}
+				mui.fire(page, "newId", {
+					idd:id,
+					titles:value
+				})
+				mui.openWindow({
+					url:'pullrefresh_group_element.html',
+					id:'pullrefresh_group_element.html',
+					extras:{
+						id:id,
+						title:value
+					}
+				});
+			})
+			
 			//读取本地存储，检查是否为首次启动
 			var showGuide = plus.storage.getItem("lauchFlag");
-			var showGuide = true;
-
+			var showGuide = true;	//默认不展示
+	
 			plus.screen.lockOrientation("portrait-primary");
 			if (showGuide) {
 				plus.navigator.closeSplashscreen();
 				plus.navigator.setFullscreen(false);
-				preload();
+	//					preload();
 			}else{
 				mui.openWindow({
 					id: 'guide',
@@ -97,29 +233,12 @@
 					}
 				});				
 				setTimeout(function(){
-					preload();
+	//						preload();
 				}, 200);
 			}
-//			_self = plus.webview.currentWebview();
-//			var titleView = _self.getNavigationbar();
-//			
-//			if (!titleView) {
-//				titleView = plus.webview.getLaunchWebview().getNavigationbar();
-//			}
-//			titleView.drawRect("#cccccc", {
-//				top: "43px",
-//				height: "1px",
-//				left: "0px"
-//			});
-			
-//			_self.setStyle({
-//				bounce: 'vertical',
-//				bounceBackground: '#efeff4'
-//			});
-			
-		});
-		
-	</script>
+	});
 	
+	</script>
+
 </body>
 </html>

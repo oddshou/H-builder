@@ -193,7 +193,8 @@
 					"examples/beecloud.html",
 					"examples/imageviewer.html",
 					"examples/pullrefresh_main.html",
-					"examples/pullrefresh.html"
+					"examples/pullrefresh.html",
+					"examples/offcanvas-drag-right-plus-main.html"
 				],
 				"priority": 0
 			},

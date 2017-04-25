@@ -26,7 +26,8 @@
 			"examples/beecloud.html",
 			"examples/imageviewer.html",
 			"examples/pullrefresh_main.html",
-			"examples/pullrefresh.html"
+			"examples/pullrefresh.html",
+			"examples/offcanvas-drag-right-plus-main.html"
 		]
 	},
 	"index-menu.html": {
@@ -176,6 +177,16 @@
 		"resources": [
 			"fonts/mui.ttf",
 			"css/mui.min.css"
+		]
+	},
+	"examples/offcanvas-drag-right-plus-main.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"examples/offcanvas-drag-right-plus-menu.html"
 		]
 	}
 }

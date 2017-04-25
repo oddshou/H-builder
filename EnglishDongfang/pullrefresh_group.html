@@ -13,14 +13,6 @@
 	</head>
 
 	<body>	
-		<!--下拉刷新容器-->
-		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
-			<div class="mui-scroll">
-				<!--数据列表-->
-				<ul class="mui-table-view mui-table-view-chevron">
-				</ul>
-			</div>
-		</div>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
 			URL = 'http://192.168.1.149:8092/jsonapi';
@@ -82,76 +74,7 @@
 						}
 					});
 				})
-       		});
-
-			
-				
-//				mui.openWindowWithTitle({
-//					url:'pullrefresh_group_element.html',
-//					id:'pullrefresh_group_element.html',
-//					extras:{
-//						id:id,
-//						title:value
-//					}
-//				},{
-//					id:value,
-//					height:"44px",
-//					backgroundColor:"#f7f7f7",
-//					bottomBorderColor:"#cccccc",
-//					title:{
-//				        text:"groupElement",//标题文字
-//				        position:{ //绘制文本的目标区域，参考：http://www.html5plus.org/doc/zh_cn/nativeobj.html#plus.nativeObj.Rect
-//				            top:0,
-//				            left:0,
-//				            width:"100%",
-//				            height:"100%"
-//				        },
-//				        styles:{//绘制文本样式，参考：http://www.html5plus.org/doc/zh_cn/nativeobj.html#plus.nativeObj.TextStyles
-//				            color:"#000000",
-//				            align:"center",
-//				            family:"'Helvetica Neue',Helvetica,sans-serif",
-//				            size:"17px",
-//				            style:"normal",
-//				            weight:"normal",
-//				            fontSrc:""
-//				        }
-//				    },
-//				    back:{//左上角返回箭头
-//				        image:{//图片格式
-//				            base64Data:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAb1BMVEUAAAAAev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8AAACubimgAAAAI3RSTlMAGfUTGfQTGPMSGPIYGhgaGBsXGxcbFxwXHBccFhwWHRYdHWufDPQAAAABYktHRACIBR1IAAAAB3RJTUUH4QETEBwooeTlkQAAAJVJREFUSMft1EkSgkAQRNFGUXFWHBDBibr/HTUwD5B/48Ig1y+io7u6MqUhf5hsNEY+j5hMgZ/FJ8Xc9ovos3T96utjbfqN/Nb0O/m96Uv5g+mP8ifTn+Ur01/ka9Nf5RvTt/I309/lH6Z/yr9Mn+Q71/MT8B34K/E58Enzv8R/K98HvnF8p3lr8F7izce7lbf3kJ/lDQp9HdBhgg3PAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE3LTAxLTE5VDE2OjI4OjQwKzA4OjAwpTDFwQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxNy0wMS0xOVQxNjoyODo0MCswODowMNRtfX0AAAAASUVORK5CYII=',//加载图片的Base64编码格式数据 base64Data 和 imgSRC 必须指定一个.否则不显示返回箭头
-//				            imgSrc:'',//要加载的图片路径
-//				            sprite:{//图片源的绘制区域，参考：http://www.html5plus.org/doc/zh_cn/nativeobj.html#plus.nativeObj.Rect
-//				                top:'0px',
-//				                left:'0px',
-//				                width:'100%',
-//				                height:'100%'
-//				            },
-//				            position:{//绘制图片的目标区域，参考：http://www.html5plus.org/doc/zh_cn/nativeobj.html#plus.nativeObj.Rect
-//				                top:"10px",
-//				                left:"10px",
-//				                width:"24px",
-//				                height:"24px"
-//				            }
-//				        },
-////				        click:function(){
-////				            //重写 点击返回图标时执行的回调函数，默认执行mui.back();
-////				        }
-//				    }
-//				})
-//			})
-
-//			if (mui.os.plus) {
-//				mui.plusReady(function() {
-//					setTimeout(function() {
-//						mui('#pullrefresh').pullRefresh().pullupLoading();
-//					}, 10);
-//
-//				});
-//			} else {
-//				mui.ready(function() {
-//					mui('#pullrefresh').pullRefresh().pullupLoading();
-//				});
-//			}
+       	});
 		</script>
 
 	</body>

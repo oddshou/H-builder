@@ -31,8 +31,8 @@
 		</body>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript">
-			URL = 'http://192.168.1.149:8092/jsonapi';			
-//			URL = 'http://120.77.9.71:8092/jsonapi';
+//			URL = 'http://192.168.1.149:8092/jsonapi';			
+			URL = 'http://120.77.9.71:8092/jsonapi';
 			var pageIndex = 0;
 			var PAGE_SIZE = 32;
 			var group_id = 1;
@@ -113,11 +113,17 @@
 				dopost();
 				
 				var title = document.body.querySelector('.title');
-				title.parentNode.removeChild(title);
+				if (title != undefined) {
+					title.parentNode.removeChild(title);
+				}
 				
 			})
 			var page = null;
 			mui.plusReady(function() {
+				main = plus.webview.currentWebview();
+				main.setStyle({
+					zindex:1
+				})
   				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(){
 					var id = this.getAttribute('id');
 					var value = this.innerText;
