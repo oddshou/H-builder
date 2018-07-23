@@ -29,7 +29,7 @@
 		<a class="mui-action-back mui-btn mui-btn-link mui-pull-right">关闭</a>
 		<h1 class="mui-title">off canvas（侧滑导航）</h1>
 	</header>
-	<div class="mui-content">
+	<!--<div class="mui-content">-->
 		<!--下拉刷新容器-->
 		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-scroll">
@@ -38,7 +38,7 @@
 				</ul>
 			</div>
 		</div>
-	</div>
+	<!--</div>-->
 	<script src="js/mui.min.js"></script>
 	<script type="text/javascript">
 //		URL = 'http://192.168.1.149:8092/jsonapi';
@@ -52,6 +52,7 @@
 				"params" : {}
 			});
 		}
+		var responseData = null;
 		function createList(response){
 			mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
 			mui('#pullrefresh').pullRefresh().disablePullupToRefresh();
@@ -65,6 +66,7 @@
 				li.innerHTML = '<a class="mui-navigate-right">' + response.data[i].title +'</a>';
 				table.appendChild(li);
 			}
+			responseData = response;
 		}
 
 	</script>
@@ -105,6 +107,10 @@
 		 * 显示菜单菜单
 		 */
 		function openMenu() {
+			//log scrollbar class
+//			var node = document.body.querySelector('#pullrefresh');
+//			console.log(node.innerHTML);
+			
 			if (!showMenu) {
 				//侧滑菜单处于隐藏状态，则立即显示出来；
 				//显示完毕后，根据不同动画效果移动窗体；
@@ -172,7 +178,46 @@
 				openMenu();
 			}
 		}
-		mui.plusReady(function() {
+		
+		document.addEventListener('offcanvasselect', function(event){
+				console.log('参数 ' + event.detail.idd);
+				console.log("参数 " + event.detail.titles )
+				if (responseData != null) {
+//					console.log(JSON.stringify(responseData.data));
+					for (var i = 0; i < responseData.data.length; i++) {
+						var item = responseData.data[i];
+						console.log("item title"+ item.title + " " + event.detail.titles)
+						if(item.title.equals(event.detail.titles)){
+							
+							goto_groupelement(item.id, item.title);
+						}
+					}
+				}
+				var title = event.detail.titles;
+				if (title == "cell_all") {
+					
+				}
+			})
+		
+		function goto_groupelement(idd, titles){
+			if (page == null) {
+				return;
+			}
+			mui.fire(page, "newId", {
+					idd:idd,
+					titles:titles
+				})
+			mui.openWindow({
+					url:'pullrefresh_group_element.html',
+					id:'pullrefresh_group_element.html',
+					extras:{
+						id:idd,
+						title:titles
+					}
+				});
+		}
+		
+		mui.plusReady(function() {	
 			main = plus.webview.currentWebview();
 			main.setStyle({
 				zindex:1
@@ -188,25 +233,14 @@
 					}
 				});
 			}, 300);
-			
+			if (page == null) {
+				page = plus.webview.getWebviewById("pullrefresh_group_element.html");
+			}
 			mui('#data-table-view').on('tap', '.mui-table-view-cell', function(){
 				var id = this.getAttribute('id');
 				var value = this.innerText;
-				if (page == null) {
-					page = plus.webview.getWebviewById("pullrefresh_group_element.html");
-				}
-				mui.fire(page, "newId", {
-					idd:id,
-					titles:value
-				})
-				mui.openWindow({
-					url:'pullrefresh_group_element.html',
-					id:'pullrefresh_group_element.html',
-					extras:{
-						id:id,
-						title:value
-					}
-				});
+
+				goto_groupelement(id, value);
 			})
 			
 			//读取本地存储，检查是否为首次启动

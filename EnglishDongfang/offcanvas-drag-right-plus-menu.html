@@ -48,22 +48,22 @@
 				</div>
 				<div class="title" style="margin-bottom: 25px;">侧滑选项</div>
 				<ul class="mui-table-view mui-table-view-chevron mui-table-view-inverted">
-					<li class="mui-table-view-cell">
+					<li class="mui-table-view-cell" id="cell_class">
 						<a class="mui-navigate-right">
 							分类
 						</a>
 					</li>
-					<li class="mui-table-view-cell">
+					<li class="mui-table-view-cell" id="cell_all">
 						<a class="mui-navigate-right">
 							总章
 						</a>
 					</li>
-					<li class="mui-table-view-cell">
+					<li class="mui-table-view-cell" id="cell_search">
 						<a class="mui-navigate-right">
 							搜索
 						</a>
 					</li>
-					<li class="mui-table-view-cell">
+					<li class="mui-table-view-cell" id="cell_adv">
 						<a class="mui-navigate-right">
 							广告
 						</a>
@@ -78,10 +78,24 @@
 					menubutton: false
 				}
 			});
+			
+			
 			//获得侧滑主窗口webview对象
 			var main = null;
+			var page = null;
 			mui.plusReady(function () {
 				main = plus.webview.currentWebview().opener();
+				//
+				mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(){
+					if (page == null) {
+						page = plus.webview.getWebviewById(plus.runtime.appid);
+					}
+					mui.fire(page, "offcanvasselect", {
+						idd: this.id,
+						titles:this.innerText
+					})
+					closeMenu();
+				})
 			})
 			function closeMenu () {
 				mui.fire(main,"menu:swipeleft");
